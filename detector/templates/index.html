@@ -1,0 +1,190 @@
+{% load static %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>🌳 Tree Data Collector</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            
+        }
+
+        /* --- NEW NAVBAR STYLE FOR INTERNAL PAGES --- */
+        .navbar-internal {
+            background-color: #ffffff; /* White background */
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .navbar-internal .navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #212529 !important; /* Dark text */
+        }
+        .navbar-internal .navbar-nav .nav-link {
+            font-family: 'Montserrat', sans-serif;
+            color: #495057 !important; /* Grey text */
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+        }
+        .navbar-internal .navbar-nav .nav-link:hover {
+            color: #000000 !important; /* Darker on hover */
+        }
+        .navbar-internal .navbar-nav .nav-link.active {
+            color: #0d6efd !important; /* Bootstrap blue for active */
+            font-weight: 700;
+        }
+        /* --- END OF NEW NAVBAR STYLE --- */
+
+        #street-view {
+            width: 100%;
+            height: 70vh; /* Slightly reduced height */
+            border-radius: 0.5rem; /* Bootstrap's rounded corners */
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-internal shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'homepage' %}">
+                🌍 Tree Scanner
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'homepage' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'scanner' %}">Scanner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'data_collection' %}">Data Collection</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="text-center mb-4">
+            <h1 class="display-5 fw-bold">Street View Dataset Collector</h1>
+            <p class="lead text-muted">Navigate the map and click "Save" to capture an image for the selected class.</p>
+        </div>
+
+        <div id="street-view" class="shadow-lg"></div>
+
+        <div class="input-group input-group-lg my-4 shadow-sm">
+            <select class="form-select" id="class-select" aria-label="Select tree type">
+                <option selected disabled>-- Select a Tree Label --</option>
+                <option value="Angsana">Angsana</option>
+                <option value="CoconutPalm">Coconut Palm</option>
+                <option value="RainTree">Rain Tree</option>
+                <option value="RoyalPalm">Royal Palm</option>
+            </select>
+            <button class="btn btn-success fw-bold" type="button" id="save-button">
+                💾 Save This View
+            </button>
+        </div>
+        
+        <div id="result-alert" class="alert mt-3" role="alert" style="display: none;">
+            </div>
+    </div>
+
+    <footer class="text-center py-4 bg-white border-top">
+        <p class="mb-0 text-muted">&copy; 2025 Tree Scanner Project</p>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        let panorama;
+        const saveButton = document.getElementById("save-button");
+        const classSelect = document.getElementById("class-select");
+        const resultAlert = document.getElementById("result-alert");
+
+        function initStreetView() {
+            // Updated location to Penang
+            const penangLocation = { lat: 5.45043, lng: 100.305456}; 
+            panorama = new google.maps.StreetViewPanorama(
+                document.getElementById("street-view"), {
+                    position: penangLocation,
+                    pov: { heading: 165, pitch: 0 },
+                    zoom: 1
+                }
+            );
+        }
+
+        // Updated function to work with the button and dropdown
+        async function scanAndSave() {
+            const className = classSelect.value;
+            
+            // Validate selection
+            if (className.startsWith("--")) {
+                showAlert("Please select a tree label from the dropdown first.", "danger");
+                return;
+            }
+
+            const location = panorama.getPosition();
+            const pov = panorama.getPov();
+
+            // Show loading message
+            showAlert("Saving, please wait...", "primary");
+            saveButton.disabled = true;
+
+            fetch("{% url 'streetview_save' %}", { // <-- Make sure this URL is correct in urls.py
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    lat: location.lat(),
+                    lng: location.lng(),
+                    heading: pov.heading,
+                    pitch: pov.pitch,
+                    fov: 90,
+                    label: className  // <-- send the selected class name
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    showAlert(`Error: ${data.error}`, "danger");
+                } else {
+                    showAlert(`✅ Successfully saved as: ${data.filename}`, "success");
+                }
+            })
+            .catch(err => {
+                showAlert(`⚠️ Save failed. ${err}`, "danger");
+            })
+            .finally(() => {
+                saveButton.disabled = false;
+            });
+        }
+
+        // Helper function to show alerts
+        function showAlert(message, type) {
+            resultAlert.textContent = message;
+            // Reset all alert color classes and add the correct one
+            resultAlert.className = `alert alert-${type} mt-3`;
+            resultAlert.style.display = "block";
+        }
+
+        // Add click listener to the new save button
+        saveButton.addEventListener("click", scanAndSave);
+    
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=initStreetView"></script>
+</body>
+</html>

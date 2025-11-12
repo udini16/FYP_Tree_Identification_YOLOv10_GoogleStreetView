@@ -1,0 +1,47 @@
+# ============================
+# 🌳 YOLOv10m Config (Balanced for Google Street View)
+# Optimized for RTX 3060 Ti (8GB)
+# ============================
+
+# Dataset
+data: dataset_detection/data.yaml
+
+# Model
+model: yolov10m.pt         # Medium model: best balance between speed & accuracy
+imgsz: 640                 # Matches Google Street View limit
+batch: 8                   # Safe for 8GB VRAM
+epochs: 250
+device: 0
+patience: 50
+
+# Augmentation (natural-looking variation)
+hsv_h: 0.015
+hsv_s: 0.7
+hsv_v: 0.4
+degrees: 10.0
+translate: 0.1
+scale: 0.5
+shear: 2.0
+perspective: 0.0
+flipud: 0.3
+fliplr: 0.5
+mosaic: 1.0
+mixup: 0.2
+copy_paste: 0.15
+
+# Optimizer
+optimizer: AdamW
+lr0: 0.0018         # Slightly slower start than v10x for smoother convergence
+lrf: 0.01
+momentum: 0.937
+weight_decay: 0.0005
+
+# Experimental
+close_mosaic: 15     # Turn off mosaic near the end for clean learning
+erasing: 0.3         # Moderate random erase for realism
+
+# Logging & Output
+project: runs/train_streetview
+name: yolov10m_640_balanced
+exist_ok: True
+plots: True

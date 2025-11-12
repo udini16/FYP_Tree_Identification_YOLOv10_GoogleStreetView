@@ -1,0 +1,46 @@
+# ============================
+# 🌳 YOLOv10x Config (Optimized for Google Street View, 8GB VRAM)
+# ============================
+
+# Dataset
+data: dataset_detection/data.yaml
+
+# Model
+model: yolov10x.pt         # Highest accuracy version
+imgsz: 640                 # Keep at 640 — Street View API limit
+batch: 4                   # Reduce to 4 for 8GB VRAM
+epochs: 300
+device: 0
+patience: 70               # Allow more time for learning improvements
+
+# Augmentation (strong but realistic)
+hsv_h: 0.015
+hsv_s: 0.7
+hsv_v: 0.4
+degrees: 10.0
+translate: 0.1
+scale: 0.5
+shear: 2.0
+perspective: 0.0
+flipud: 0.3
+fliplr: 0.5
+mosaic: 1.0
+mixup: 0.25
+copy_paste: 0.15
+
+# Optimizer and learning
+optimizer: AdamW
+lr0: 0.002
+lrf: 0.01
+momentum: 0.937
+weight_decay: 0.0005
+
+# Experimental
+close_mosaic: 10           # Disable mosaic at final epochs for stable convergence
+erasing: 0.4               # Simulate occlusions (branches, poles, etc.)
+
+# Logging and project
+project: runs/train_streetview
+name: yolov10x_640_streetview_v3
+exist_ok: True
+plots: True

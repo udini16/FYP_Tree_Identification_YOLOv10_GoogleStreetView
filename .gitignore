@@ -1,0 +1,57 @@
+--- IMPORTANT: Secrets ---
+
+Ignore the environment file containing API keys
+
+.env
+*.env
+
+--- Python & Virtual Environment ---
+
+Ignore the virtual environment folder
+
+venv/
+.venv/
+env/
+
+Ignore Python cache
+
+pycache/  <-- (Fixed this line, was pycache)
+*.pyc
+
+--- Django ---
+
+Ignore the local database
+
+db.sqlite3
+*.sqlite3
+
+Ignore media files (user-uploaded/generated images)
+
+media/
+
+--- Datasets ---
+
+Ignore large dataset folders
+
+dataset_detection/
+dataset_collection/
+datasets/
+
+--- YOLO / Model ---
+
+Ignore the trained model files (e.g., best.pt, last.pt)
+
+*.pt
+*.pth
+
+Ignore all training run outputs (logs, images, etc.)
+
+runs/
+
+--- OS / IDE ---
+
+(Ignoring .vscode, .DS_Store, etc.)
+
+.vscode/
+.DS_Store
+Thumbs.db

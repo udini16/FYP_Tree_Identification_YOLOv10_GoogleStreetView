@@ -1,0 +1,303 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>🌳 Tree Scanner Homepage</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+        }
+
+        /* --- NAVBAR STYLE --- */
+        .navbar-overlaid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.1) !important; 
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 0;
+        }
+        .navbar-overlaid .navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #ffffff !important;
+        }
+        .navbar-overlaid .navbar-nav .nav-link {
+            font-family: 'Montserrat', sans-serif;
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: color 0.2s;
+        }
+        .navbar-overlaid .navbar-nav .nav-link:hover,
+        .navbar-overlaid .navbar-nav .nav-link.active {
+            color: #ffffff !important;
+        }
+        .navbar-overlaid .navbar-toggler-icon {
+             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        .navbar-overlaid .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        /* --- END OF NAVBAR STYLE --- */
+
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            /* stylelint-disable-next-line */
+            background-image: url('{% static 'images/background.jpg' %}');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            color: #ffffff;
+            min-height: 100vh; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 0; 
+        }
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.45);
+            z-index: 1;
+        }
+        .hero-section .container {
+            position: relative;
+            z-index: 2;
+        }
+        .hero-section h1 {
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 700;
+            font-size: 3.5rem; 
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .hero-section .lead {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2.5rem; 
+            text-align: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /* --- END OF HERO --- */
+
+
+        /* --- DELETED .btn-orange-scanner --- */
+
+        /* --- ADDED YOUR NEW BUTTON-53 STYLES --- */
+        .button-53-wrapper {
+            /* This div centers the skewed button correctly */
+            display: flex;
+            justify-content: center;
+        }
+        .button-53 {
+            background-color: #3DD1E7;
+            border: 0 solid #E5E7EB;
+            box-sizing: border-box;
+            color: #000000;
+            display: flex;
+            font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+            font-size: 1rem;
+            font-weight: 700;
+            justify-content: center;
+            line-height: 1.75rem;
+            padding: .75rem 1.65rem;
+            position: relative;
+            text-align: center;
+            text-decoration: none #000000 solid;
+            text-decoration-thickness: auto;
+            
+            /* MODIFIED: Don't use 100% width, let it fit its content */
+            /* width: 100%; */ 
+            /* max-width: 460px; */
+
+            cursor: pointer;
+            transform: rotate(-2deg);
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        .button-53:focus {
+            outline: 0;
+        }
+
+        .button-53:after {
+            content: '';
+            position: absolute;
+            border: 1px solid #000000;
+            bottom: 4px;
+            left: 4px;
+            width: calc(100% - 1px);
+            height: calc(100% - 1px);
+        }
+
+        .button-53:hover:after {
+            bottom: 2px;
+            left: 2px;
+        }
+
+        @media (min-width: 768px) {
+            .button-53 {
+                padding: .75rem 3rem;
+                font-size: 1.25rem;
+            }
+        }
+        /* --- END OF BUTTON-53 STYLES --- */
+
+
+        /* --- CARD SECTION STYLES --- */
+        .card-img-top {
+            height: 450px;
+            object-fit: contain;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card-img-wrapper {
+            overflow: hidden;
+            border-top-left-radius: var(--bs-card-inner-border-radius);
+            border-top-right-radius: var(--bs-card-inner-border-radius);
+        }
+        .card:hover .card-img-top {
+            transform: scale(1.1);
+        }
+        /* --- END OF CARD STYLES --- */
+
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-overlaid">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'homepage' %}">
+                🌍 Tree Scanner
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'homepage' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'scanner' %}">Scanner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'data_collection' %}">Data Collection</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center"> 
+                <div class="col-lg-8 text-center"> 
+                    <h1 class="display-4 fw-bold mb-3">Identify Malaysian Street Trees with AI</h1>
+                    <p class="lead fw-normal mb-4">
+                        This project uses a YOLOv10 object detection model to identify common trees found along the streets of Malaysia. By leveraging Google Street View, we can automatically scan and classify trees to better understand our urban canopy.
+                    </p>
+                    
+                    <div class="button-53-wrapper">
+                        <a href="{% url 'scanner' %}" class="button-53" role="button">
+                            🌳 Launch the Scanner
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="tree-types" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold">Identifiable Tree Types</h2>
+            <div class="row g-4">
+                
+                <div class="col-md-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-img-wrapper">
+                            <img src="{% static 'images/Angsana.jpg' %}" class="card-img-top" alt="Angsana Palm">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Angsana</h5>
+                            <p class="card-text">Also known as 'Sena', this large, deciduous tree is famous for its dense, shade-giving canopy and the "golden showers" of yellow flowers it produces.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-img-wrapper">
+                            <img src="{% static 'images/What-is-the-coconut-palm.jpg' %}" class="card-img-top" alt="Coconut Palm">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Coconut Palm</h5>
+                            <p class="card-text">The iconic 'Pokok Kelapa'. A tall, slender palm found all over Malaysia, vital to both the landscape and cuisine. Easily recognized by its fruit clusters.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-img-wrapper">
+                            <img src="{% static 'images/RainTree.jpg' %}" class="card-img-top" alt="Rain Tree">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Rain Tree</h5>
+                            <p class="card-text">Known as 'Pokok Hujan-Hujan', this tree has a massive, umbrella-shaped canopy that is often wider than it is tall, providing immense shade.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-img-wrapper">
+                            <img src="{% static 'images/RoyalPalm.jpg' %}" class="card-img-top" alt="Royal Palm">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Royal Palm</h5>
+                            <p class="card-text">A tall, majestic palm with a very smooth, concrete-like grey trunk and a bright green crownshaft. Used for formal, grand landscaping.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    
+    <footer class="text-center py-4 bg-white border-top">
+        <p class="mb-0 text-muted">&copy; 2025 Tree Scanner Project</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>
