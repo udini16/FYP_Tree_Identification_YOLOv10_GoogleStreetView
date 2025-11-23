@@ -1,0 +1,7 @@
+# Ignore HTML, CSS, and Javascript in language stats
+*.html linguist-vendored
+*.css linguist-vendored
+*.js linguist-vendored
+
+# Force GitHub to detect Python (optional but helpful)
+*.py linguist-detectable

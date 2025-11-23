@@ -13,57 +13,97 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
+        /* Use Inter as the default font */
         body {
             font-family: 'Inter', "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
+            background-color: #f8f9fa; 
+            margin: 0;
         }
 
-        .navbar-internal {
-            background-color: #ffffff;
+        /* --- NAVBAR STYLE (Transparent/Overlaid) --- */
+        .navbar-overlaid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.1) !important; 
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             padding: 0.75rem 0;
-            border-bottom: 1px solid #e0e0e0;
         }
-        .navbar-internal .navbar-brand {
+        .navbar-overlaid .navbar-brand {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             font-size: 1.5rem;
-            color: #212529 !important;
+            color: #ffffff !important;
         }
-        .navbar-internal .navbar-nav .nav-link {
+        .navbar-overlaid .navbar-nav .nav-link {
             font-family: 'Montserrat', sans-serif;
-            color: #495057 !important;
+            color: rgba(255, 255, 255, 0.8) !important;
             font-weight: 500;
             padding: 0.5rem 1rem;
+            transition: color 0.2s;
         }
-        .navbar-internal .navbar-nav .nav-link:hover {
-            color: #000000 !important;
+        .navbar-overlaid .navbar-nav .nav-link:hover,
+        .navbar-overlaid .navbar-nav .nav-link.active {
+            color: #ffffff !important;
         }
-        .navbar-internal .navbar-nav .nav-link.active {
-            color: #0d6efd !important;
-            font-weight: 700;
+        /* White Toggler Icon for Dark Backgrounds */
+        .navbar-overlaid .navbar-toggler-icon {
+             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
-        
-        /* --- DELETED .btn-orange-scanner --- */
+        .navbar-overlaid .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        /* --- END OF NAVBAR STYLE --- */
 
-        /* Hero Section Style */
+        /* --- HERO SECTION --- */
         .hero-section {
-            padding: 4rem 0;
+            background-image: url('{% static 'images/background.jpg' %}');
+            background-size: cover;
+            background-position: center;
+            position: relative; 
+            padding: 6rem 0; 
             display: flex;
             align-items: center;
-            min-height: 80vh;
+            min-height: 85vh; 
+            color: #ffffff; 
+        }
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6); 
+            z-index: 1;
+        }
+        .hero-section .container {
+            position: relative;
+            z-index: 2;
         }
         .hero-section h1 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .hero-section p.lead {
+            color: rgba(255, 255, 255, 0.95); 
+            font-weight: 400;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
         
         #street-view {
             width: 100%;
-            height: 70vh;
-            border: 1px solid #dee2e6;
+            height: 70vh; 
+            border: 4px solid rgba(255, 255, 255, 0.2); 
+            border-radius: 0.5rem;
         }
 
-        #result { min-height: 150px; }
+        #result {
+            min-height: 150px;
+        }
 
         .spinner-container {
             display: flex;
@@ -74,15 +114,20 @@
             color: #6c757d;
         }
 
-        /* --- ADDED YOUR NEW BUTTON-53 STYLES --- */
+        /* --- ADDED STYLE FOR TABLE --- */
+        .table-responsive {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+        }
         .button-53 {
             background-color: #3DD1E7;
             border: 0 solid #E5E7EB;
             box-sizing: border-box;
             color: #000000;
             display: flex;
-            font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-            font-size: 1rem;
             font-weight: 700;
             justify-content: center;
             line-height: 1.75rem;
@@ -92,19 +137,15 @@
             text-decoration: none #000000 solid;
             text-decoration-thickness: auto;
             width: 100%;
-            max-width: 460px;
-            position: relative;
+            max-width: 300px;
             cursor: pointer;
-            transform: rotate(-2deg);
+            transform: rotate(-1deg);
             user-select: none;
             -webkit-user-select: none;
             touch-action: manipulation;
+            border: 1px solid #000;
         }
-
-        .button-53:focus {
-            outline: 0;
-        }
-
+        .button-53:focus { outline: 0; }
         .button-53:after {
             content: '';
             position: absolute;
@@ -114,26 +155,13 @@
             width: calc(100% - 1px);
             height: calc(100% - 1px);
         }
-
-        .button-53:hover:after {
-            bottom: 2px;
-            left: 2px;
-        }
-
-        @media (min-width: 768px) {
-            .button-53 {
-                padding: .75rem 3rem;
-                font-size: 1.25rem;
-            }
-        }
-        /* --- END OF BUTTON-53 STYLES --- */
-
+        .button-53:hover:after { bottom: 2px; left: 2px; }
     </style>
 </head>
 <body>
     
-    <nav class="navbar navbar-expand-lg navbar-internal shadow-sm">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-overlaid">
+        <div class="container">
             <a class="navbar-brand" href="{% url 'homepage' %}">
                 🌍 Tree Scanner
             </a>
@@ -158,21 +186,22 @@
 
     <header class="hero-section">
         <div class="container">
-            <div class="row gx-5">
+            <div class="row gx-5 align-items-center">
                 
-                <div class="col-lg-6 d-flex flex-column justify-content-center">
-                    <h1 class="display-4 fw-bold mb-3 mt-7">Street View Tree Scanner</h1>
-                    <p class="lead fw-normal text-muted mb-4">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-3">Street View Tree Scanner</h1>
+                    
+                    <p class="lead mb-4">
                         Navigate the streets and use the power of AI to identify Angsana, Coconut Palms, Rain Trees, and Royal Palms in real-time.
                     </p>
                     
-                    <button id="scan-button" class="button-53" role="button" onclick="captureView()">
+                    <button id="scan-button" class="button-53" onclick="captureView()">
                         🌳 Scan Trees in View
                     </button>
                 </div>
                 
                 <div class="col-lg-6">
-                    <div id="street-view" class="rounded-3 shadow-lg"></div>
+                    <div id="street-view"></div>
                 </div>
 
             </div>
@@ -184,13 +213,38 @@
             <div id="result" class="alert alert-secondary text-center" role="alert">
                 Click "Scan Trees" to detect trees in the current view.
             </div>
+
+            <div class="table-responsive mt-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="fw-bold mb-0">📊 Recent Scan Inventory</h3>
+                    
+                    <a href="{% url 'download_inventory_csv' %}" class="btn btn-success">
+                        📥 Download Full CSV
+                    </a>
+                </div>
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Total Trees</th>
+                            <th>Counts</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-table-body">
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-3">Scan results will be logged here.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 
     <footer class="text-center py-4 bg-white border-top">
         <p class="mb-0 text-muted">&copy; 2025 Tree Scanner Project</p>
     </footer>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
@@ -209,12 +263,11 @@
         }
 
         async function captureView() {
-            // ... (rest of your JavaScript is unchanged) ...
             const location = panorama.getPosition();
             const pov = panorama.getPov();
             const resultDiv = document.getElementById("result");
 
-            resultDiv.className = "card card-body shadow-sm spinner-container"; 
+            resultDiv.className = "card card-body shadow-sm spinner-container";
             resultDiv.innerHTML = `
                 <div class="spinner-border text-success" role="status">
                     <span class="visually-hidden">Loading...</span>
@@ -224,9 +277,7 @@
 
             fetch("{% url 'streetview_scan' %}", {
                 method: "POST",
-                headers: { 
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     lat: location.lat(),
                     lng: location.lng(),
@@ -238,55 +289,68 @@
             .then(res => res.json())
             .then(data => {
                 resultDiv.className = "";
+
                 if (data.error) {
-                    resultDiv.innerHTML = `
-                        <div class="alert alert-danger" role="alert">
-                            <strong>❌ Error:</strong> ${data.error}
-                        </div>
-                    `;
+                    resultDiv.innerHTML = `<div class="alert alert-danger" role="alert"><strong>❌ Error:</strong> ${data.error}</div>`;
                 } else {
+                    // --- 1. RENDER SCAN RESULTS (Images/Badges) ---
                     let html = '';
-                    if (data.total_trees && data.total_trees > 0) {
+                    if (data.detections && data.detections.length > 0) {
+                        
+                        // Map the object keys to ensure consistent order
+                        const treeCountsList = Object.entries(data.tree_counts).sort((a, b) => a[0].localeCompare(b[0]));
+
                         html = `
                             <div class="card shadow-sm">
                                 <img src="${data.outputs[0]}?t=${Date.now()}" class="card-img-top" alt="Scanned view with detections">
                                 <div class="card-body">
-                                    <h5 class="card-title">✅ Scan Complete!</h5>
-                                    <p class="card-text">Found <strong>${data.total_trees}</strong> total trees:</p>
+                                    <h5 class="card-title">✅ Scan Complete! Found ${data.detections.length} trees.</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">
                         `;
-                        
-                        for (const [label, count] of Object.entries(data.tree_counts)) {
-                            html += `
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <strong>${label}</strong>
-                                    <span class="badge bg-success rounded-pill fs-6">${count}</span>
-                                </li>
-                            `;
-                        }
+                        // List of detected classes
+                        treeCountsList.forEach(([label, count]) => {
+                            html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                        ${label} <span class="badge bg-primary rounded-pill">${count}</span>
+                                     </li>`;
+                        });
                         html += `</ul></div>`;
                     } else {
-                        html = `
-                            <div class="alert alert-info" role="alert">
-                                <strong>✅ Scan complete!</strong> No trees were detected in this view.
-                            </div>
-                        `;
+                        html = `<div class="alert alert-info" role="alert"><strong>✅ Scan complete!</strong> No trees detected.</div>`;
                     }
                     resultDiv.innerHTML = html;
+
+                    // --- 2. UPDATE THE TABLE WITH ALL LOGS FROM BACKEND ---
+                    // The backend now sends ALL logs, which this function handles.
+                    if (data.recent_logs && data.recent_logs.length > 0) {
+                        updateInventoryTable(data.recent_logs);
+                    }
                 }
             })
             .catch(err => {
                 resultDiv.className = "";
-                resultDiv.innerHTML = `
-                    <div class="alert alert-danger" role="alert">
-                        <strong>⚠️ Scan failed.</strong> Could not connect to the server. ${err}
-                    </div>
+                resultDiv.innerHTML = `<div class="alert alert-danger" role="alert"><strong>⚠️ Scan failed.</strong> Could not connect to the server. ${err}</div>`;
+            });
+        }
+
+        function updateInventoryTable(logs) {
+            const tbody = document.getElementById("inventory-table-body");
+            tbody.innerHTML = ""; // Clear existing rows
+
+            logs.forEach(row => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${row.Timestamp.split(' ')[1]}<br><small class="text-muted">${row.Timestamp.split(' ')[0]}</small></td>
+                    <td>${parseFloat(row.Latitude).toFixed(5)}</td>
+                    <td>${parseFloat(row.Longitude).toFixed(5)}</td>
+                    <td><span class="badge bg-secondary">${row.Total_Trees}</span></td>
+                    <td>${row.Counts}</td>
                 `;
+                tbody.appendChild(tr);
             });
         }
     </script>
-    
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=initStreetView"></script>
 </body>
 </html>
